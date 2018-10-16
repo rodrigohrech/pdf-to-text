@@ -1,7 +1,4 @@
 steps:
-- name: 'gcr.io/cloud-builders/yarn'
-  args: ['install']
-  dir: 'functions/autodeploy'
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['beta', 'functions', 'deploy', 'pdf-to-text', '--trigger-bucket', 'bucket-tarefas']
   dir: 'functions/autodeploy'
