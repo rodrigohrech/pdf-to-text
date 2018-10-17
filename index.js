@@ -40,7 +40,7 @@ function publish(data, bucket) {
     });
 }
 
-exports.parsePDF = (data, context) => {
+exports.parsePDF = (data, context, callback) => {
   console.log(data);
   const file = data;
   const fileBucket = file.bucket;
@@ -78,6 +78,6 @@ exports.parsePDF = (data, context) => {
         publish(chunks.join(' '), fileBucket);
       }
     });
-
+    callback();
   }).catch((error) => { console.log(error) });
 };
