@@ -55,11 +55,12 @@ exports.parsePDF = (data, context, callback) => {
   }
 
   const fileName = path.basename(filePath);
-
+  console.log(`fileName: ${fileName}`);
   const bucket = gcs.bucket(fileBucket);
+  console.log(`bucket: ${bucket}`);
   const tempFilePath = path.join(os.tmpdir(), fileName);
-
-  console.log("Downloading file.")
+  console.log(`tempFilePath: ${tempFilePath}`);
+  console.log("Downloading file.");
   bucket.file(filePath).download({
     destination: tempFilePath,
   }).then(() => {
