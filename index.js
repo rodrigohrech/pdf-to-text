@@ -40,7 +40,7 @@ function publish(data, bucket) {
     });
 }
 
-exports.parsePDF = async (data, context) => {
+exports.parsePDF = (data, context, callback) => {
   console.log(data);
   const file = data;
   const fileBucket = file.bucket;
@@ -59,11 +59,10 @@ exports.parsePDF = async (data, context) => {
   const bucket = gcs.bucket(fileBucket);
   const tempFilePath = path.join(os.tmpdir(), fileName);
 
-  try {
-    await bucket.file(filePath).download({
-      destination: tempFilePath,
-    })
-
+  console.log("Downloading file.")
+  bucket.file(filePath).download({
+    destination: tempFilePath,
+  }).then(() => {
     console.log("Reading File");
     
     var buffer = fs.readFileSync(tempFilePath)
@@ -79,7 +78,6 @@ exports.parsePDF = async (data, context) => {
         publish(chunks.join(' '), fileBucket);
       }
     });
-  } catch (error) {
-    console.log(error) 
-  }
+    callback();
+  }).catch((error) => { console.log(error) });
 };
