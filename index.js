@@ -40,9 +40,8 @@ function publish(data, bucket) {
     });
 }
 
-exports.parsePDF = (data, context, callback) => {
-  console.log(data);
-  const file = data;
+exports.parsePDF = (event, callback) => {
+  const file = event.data;
   const fileBucket = file.bucket;
   const filePath = file.name;
   const contentType = file.contentType;
@@ -61,7 +60,7 @@ exports.parsePDF = (data, context, callback) => {
   const tempFilePath = path.join(os.tmpdir(), fileName);
   console.log(`tempFilePath: ${tempFilePath}`);
   console.log("Downloading file.");
-  var conclusion = false;
+
   bucket.file(filePath).download({
     destination: tempFilePath,
   }).then(() => {
@@ -79,12 +78,9 @@ exports.parsePDF = (data, context, callback) => {
         console.log(chunks);
         publish(chunks.join(' '), fileBucket);
       }
-      conclusion = true;
       callback();
     });
   }).catch((error) => { 
     console.log(error) 
-    conclusion = true;
   });
-  while(!conclusion){}
 };
