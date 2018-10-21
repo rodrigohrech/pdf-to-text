@@ -78,7 +78,8 @@ exports.parsePDF = (data, context, callback) => {
         console.log(chunks);
         publish(chunks.join(' '), fileBucket);
       }
+      callback();
     });
-    callback();
   }).catch((error) => { console.log(error) });
+  
 };
