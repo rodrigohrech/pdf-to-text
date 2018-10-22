@@ -71,7 +71,7 @@ exports.parsePDF = (data, context) => {
     
     console.log('Image downloaded locally to', tempFilePath);
     
-    pdfText(buffer, function (err, chunks) {
+    return pdfText(buffer, function (err, chunks) {
       console.log("PDF convertion done.")
       if (err) {
         console.error('ERROR:', err);
