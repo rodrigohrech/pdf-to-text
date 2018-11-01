@@ -45,7 +45,7 @@ function publish(data, bucket) {
         });
 }
 
-exports.parsePDF = (data, context) => {
+exports.parsePDF = (data, context, callback) => {
     console.log(data);
     const file = data;
     const fileBucket = file.bucket;
@@ -90,7 +90,7 @@ exports.parsePDF = (data, context) => {
         }, ],
     };
 
-    return client
+    client
         .asyncBatchAnnotateFiles(request)
         .then(results => {
             const operation = results[0];
@@ -101,8 +101,10 @@ exports.parsePDF = (data, context) => {
             const destinationUri =
                 filesResponse[0].responses[0].outputConfig.gcsDestination.uri;
             console.log('Json saved to: ' + destinationUri);
+            callback();
         })
         .catch(err => {
             console.error('ERROR:', err);
+            callback();
         });
 };
