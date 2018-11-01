@@ -52,7 +52,7 @@ exports.parsePDF = (data, context, callback) => {
     const filePath = file.name;
     const contentType = file.contentType;
 
-    console.log(`Processing file: ${file.name}`);
+    console.log(`1) Processing file: ${file.name}`);
     console.log(contentType);
     if (!contentType.endsWith('pdf')) {
         console.log('This is not a pdf.');
